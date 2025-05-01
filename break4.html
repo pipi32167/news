@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breaking 4 - 费丝·基普耶贡的历史性挑战</title>
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Iconify -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // 配置 Tailwind 深色模式
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter var', 'sans-serif']
+          },
+        }
+      }
+    }
+
+    // 检查系统主题
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .timeline-item {
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 自定义滚动条 */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .dark ::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+      background: #555;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #aaa;
+    }
+
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: #666;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300"
+  x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }">
+  <!-- 导航栏 -->
+  <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 fixed w-full z-10 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <iconify-icon icon="material-symbols:sprint"
+            class="h-8 w-8 text-primary-600 dark:text-primary-500"></iconify-icon>
+          <span class="ml-2 text-xl font-semibold">Breaking 4 挑战</span>
+        </div>
+        <div class="flex items-center">
+          <button
+            @click="darkMode = !darkMode; darkMode ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark'); localStorage.theme = darkMode ? 'dark' : 'light'"
+            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+            aria-label="切换深色模式">
+            <template x-if="darkMode">
+              <iconify-icon icon="tabler:sun" class="h-6 w-6"></iconify-icon>
+            </template>
+            <template x-if="!darkMode">
+              <iconify-icon icon="tabler:moon" class="h-6 w-6"></iconify-icon>
+            </template>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容区域 -->
+  <main class="pt-16 pb-16">
+    <!-- 英雄区域 -->
+    <section
+      class="relative bg-gradient-to-r from-primary-700 to-primary-500 dark:from-primary-900 dark:to-primary-700">
+      <div class="absolute inset-0 bg-black opacity-30 dark:opacity-50"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-white">
+        <div class="fade-in">
+          <h1 class="text-3xl md:text-5xl font-bold mb-4">Breaking 4：打破历史</h1>
+          <p class="text-xl md:text-2xl max-w-3xl mb-6">费丝·基普耶贡将于 2025 年 6 月 26 日在巴黎挑战女子 4 分钟一英里障碍</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#history"
+              class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-800 hover:bg-primary-900 dark:bg-primary-600 dark:hover:bg-primary-700 transition-colors">
+              了解历史背景
+              <iconify-icon icon="tabler:chevron-right" class="ml-2 h-5 w-5"></iconify-icon>
+            </a>
+            <a href="#attempt"
+              class="inline-flex items-center justify-center px-5 py-3 border border-white text-base font-medium rounded-md text-white bg-transparent hover:bg-white hover:text-primary-700 transition-colors">
+              查看挑战详情
+            </a>
+          </div>
+
+          <!-- 倒计时 -->
+          <div class="mt-8 bg-white bg-opacity-20 backdrop-blur-sm p-4 rounded-lg inline-block">
+            <p class="text-sm mb-1">距离挑战日还有</p>
+            <div class="flex space-x-4" x-data="countdown()">
+              <div class="text-center">
+                <span class="text-2xl font-bold" x-text="days">00</span>
+                <p class="text-xs">天</p>
+              </div>
+              <div class="text-center">
+                <span class="text-2xl font-bold" x-text="hours">00</span>
+                <p class="text-xs">小时</p>
+              </div>
+              <div class="text-center">
+                <span class="text-2xl font-bold" x-text="minutes">00</span>
+                <p class="text-xs">分钟</p>
+              </div>
+              <div class="text-center">
+                <span class="text-2xl font-bold" x-text="seconds">00</span>
+                <p class="text-xs">秒</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 历史背景 -->
+    <section id="history" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="mb-12 fade-in">
+        <h2 class="text-3xl font-bold mb-6">4分钟一英里的历史障碍</h2>
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+          <div class="md:w-2/3">
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+              自1954年罗杰·班尼斯特首次突破以来，4分钟一英里一直是人类耐力和速度的象征。对于男性，这一障碍已被1700多人突破，而对于女性，这一障碍至今未被征服。</p>
+            <div
+              class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700 card-hover mb-8 md:mb-0">
+              <div class="flex items-center mb-4">
+                <iconify-icon icon="tabler:history"
+                  class="h-8 w-8 text-primary-600 dark:text-primary-500 mr-3"></iconify-icon>
+                <h3 class="text-xl font-semibold">历史里程碑</h3>
+              </div>
+              <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <iconify-icon icon="tabler:point"
+                    class="h-6 w-6 text-primary-600 dark:text-primary-500 mr-2 mt-0.5"></iconify-icon>
+                  <span><strong>1954年5月6日</strong>：罗杰·班尼斯特首次跑进4分钟，成绩为3分59秒4</span>
+                </li>
+                <li class="flex items-start">
+                  <iconify-icon icon="tabler:point"
+                    class="h-6 w-6 text-primary-600 dark:text-primary-500 mr-2 mt-0.5"></iconify-icon>
+                  <span><strong>1999年7月7日</strong>：希查姆·埃尔·格鲁伊创造男子世界纪录3分43秒13</span>
+                </li>
+                <li class="flex items-start">
+                  <iconify-icon icon="tabler:point"
+                    class="h-6 w-6 text-primary-600 dark:text-primary-500 mr-2 mt-0.5"></iconify-icon>
+                  <span><strong>2022年6月</strong>：全球已有1755名男子运动员跑进4分钟</span>
+                </li>
+                <li class="flex items-start">
+                  <iconify-icon icon="tabler:point"
+                    class="h-6 w-6 text-primary-600 dark:text-primary-500 mr-2 mt-0.5"></iconify-icon>
+                  <span><strong>2023年7月21日</strong>：费丝·基普耶贡创女子一英里世界纪录4分07秒64</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="md:w-1/3">
+            <img
+              src="https://k.sinaimg.cn/n/sports/2_img/upload/49d350e9/647/w2048h2599/20200506/0e79-iteyfwv5191089.jpg/w640slw.jpg"
+              alt="罗杰·班尼斯特冲过终点线" class="rounded-lg shadow-md w-full object-cover">
+            <p class="text-sm text-center mt-2 text-gray-600 dark:text-gray-400">1954年罗杰·班尼斯特历史性突破</p>
+          </div>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-1 gap-8">
+          <!-- Chart moved to full width -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700 card-hover">
+            <div class="flex items-center mb-4">
+              <iconify-icon icon="tabler:chart-line"
+                class="h-8 w-8 text-primary-600 dark:text-primary-500 mr-3"></iconify-icon>
+              <h3 class="text-xl font-semibold">记录对比</h3>
+            </div>
+            <div class="h-64">
+              <canvas id="recordsChart"></canvas>
+            </div>
+            <p class="mt-4 text-sm text-gray-600 dark:text-gray-400 italic">女子一英里世界纪录与4分钟目标仍有7秒多的差距</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 费丝·基普耶贡介绍 -->
+    <section class="bg-gray-100 dark:bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="mb-12 fade-in">
+          <h2 class="text-3xl font-bold mb-6">费丝·基普耶贡：传奇跑者</h2>
+
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="md:w-1/3">
+              <img
+                src="https://img.olympics.com/images/image/private/t_16-9_640/f_auto/v1538355600/primary/zr46x6gtyohdbpuzwcnt"
+                alt="费丝·基普耶贡" class="rounded-lg shadow-md w-full object-cover mb-6">
+              <div class="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md">
+                <ul class="space-y-4">
+                  <li>
+                    <span class="block text-sm text-gray-600 dark:text-gray-400">出生</span>
+                    <span class="font-medium">1994年，肯尼亚</span>
+                  </li>
+                  <li>
+                    <span class="block text-sm text-gray-600 dark:text-gray-400">成就</span>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                      <span
+                        class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100 px-2 py-1 rounded text-xs font-medium">三届奥运金牌</span>
+                      <span
+                        class="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100 px-2 py-1 rounded text-xs font-medium">1500米世界纪录</span>
+                      <span
+                        class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 px-2 py-1 rounded text-xs font-medium">一英里世界纪录</span>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="block text-sm text-gray-600 dark:text-gray-400">现任纪录</span>
+                    <span class="font-medium">一英里：4分07秒64（2023年）</span>
+                  </li>
+                  <li>
+                    <span class="block text-sm text-gray-600 dark:text-gray-400">1500米记录</span>
+                    <span class="font-medium">3分49秒11（2023年）</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="md:w-2/3">
+              <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                费丝·基普耶贡被广泛认为是历史上最伟大的女子中长跑运动员之一。作为三届奥运金牌得主，她已经打破了女子1500米和一英里的世界纪录。如今，她正准备挑战一个前所未有的目标：成为首位跑进4分钟一英里的女性。</p>
+
+              <p class="text-lg text-gray-700 dark:text-gray-300">
+                基普耶贡的训练报告显示她正进行高强度准备，包括600米和300米重复跑，速度表明她在部分赛段能保持所需节奏。她的纪律性训练和卓越天赋，加上耐克的技术支持，让这一看似不可能的目标成为可能。</p>
+
+              <div class="mt-6 flex gap-4">
+                <button
+                  class="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition-colors"
+                  onclick="alert('查看训练计划功能即将上线')">
+                  <iconify-icon icon="tabler:file-text" class="mr-1 h-5 w-5"></iconify-icon>
+                  查看训练计划
+                </button>
+                <button
+                  class="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition-colors"
+                  onclick="alert('查看完整纪录功能即将上线')">
+                  <iconify-icon icon="tabler:trophy" class="mr-1 h-5 w-5"></iconify-icon>
+                  查看完整纪录
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Breaking 4 挑战详情 -->
+    <section id="attempt" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="mb-12 fade-in">
+        <h2 class="text-3xl font-bold mb-6">Breaking 4 挑战详情</h2>
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
+          尝试打破4分钟一英里女子障碍的活动将在2025年6月举行，由耐克全力支持。这将是体育史上的一个重要时刻，无论结果如何。</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700 card-hover">
+            <div class="flex items-center mb-4">
+              <iconify-icon icon="tabler:calendar-event"
+                class="h-8 w-8 text-primary-600 dark:text-primary-500 mr-3"></iconify-icon>
+              <h3 class="text-xl font-semibold">时间与地点</h3>
+            </div>
+            <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:calendar"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>日期</strong>：2025年6月26日（视天气可能调整至6月26-28日间）</span>
+              </li>
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:map-pin"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>地点</strong>：法国巴黎夏莱蒂体育场（Stade Charléty）</span>
+              </li>
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:brand-youtube"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>直播</strong>：全球直播，具体平台待公布</span>
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700 card-hover">
+            <div class="flex items-center mb-4">
+              <iconify-icon icon="tabler:device-analytics"
+                class="h-8 w-8 text-primary-600 dark:text-primary-500 mr-3"></iconify-icon>
+              <h3 class="text-xl font-semibold">技术支持</h3>
+            </div>
+            <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:shoe"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>装备</strong>：耐克下一代超级跑鞋与专业服装</span>
+              </li>
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:run"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>配速</strong>：使用男性配速员辅助保持节奏</span>
+              </li>
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:wind"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>环境</strong>：可控环境确保最佳天气和赛道条件</span>
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700 card-hover">
+            <div class="flex items-center mb-4">
+              <iconify-icon icon="tabler:target-arrow"
+                class="h-8 w-8 text-primary-600 dark:text-primary-500 mr-3"></iconify-icon>
+              <h3 class="text-xl font-semibold">挑战目标</h3>
+            </div>
+            <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:clock"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>目标时间</strong>：低于4:00.00</span>
+              </li>
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:gauge"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>每圈配速</strong>：约60秒/圈（400米）</span>
+              </li>
+              <li class="flex items-start">
+                <iconify-icon icon="tabler:arrow-down"
+                  class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2 mt-0.5"></iconify-icon>
+                <span><strong>需突破</strong>：比个人最佳成绩提升7秒以上</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 交互式配速计算器 -->
+        <div
+          class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
+          <h3 class="text-xl font-semibold mb-4">配速计算器</h3>
+          <p class="text-gray-700 dark:text-gray-300 mb-4">滑动以探索不同的配速方案，了解实现4分钟一英里所需的速度。</p>
+
+          <div x-data="{
+                        pace: 60,
+                        get totalTime() {
+                            return (this.pace * 4).toFixed(2);
+                        },
+                        get formattedTime() {
+                            const mins = Math.floor(this.totalTime / 60);
+                            const secs = Math.floor(this.totalTime % 60);
+                            const hundredths = Math.round((this.totalTime % 1) * 100);
+                            return `${mins}:${secs.toString().padStart(2, '0')}.${hundredths.toString().padStart(2, '0')}`;
+                        }
+                    }" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                每圈配速（秒/400米）: <span x-text="pace.toFixed(2)"></span>
+              </label>
+              <input type="range" x-model="pace" min="55" max="65" step="0.01"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+              <div
+                class="flex-1 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-500 dark:text-gray-400">总时间（分:秒）</p>
+                <p class="text-2xl font-bold" x-text="formattedTime"></p>
+                <p x-show="totalTime < 240" class="text-green-600 dark:text-green-400 text-sm font-medium">✓ 达成目标</p>
+                <p x-show="totalTime >= 240" class="text-red-600 dark:text-red-400 text-sm font-medium">✗ 未达目标</p>
+              </div>
+
+              <div
+                class="flex-1 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-500 dark:text-gray-400">平均速度</p>
+                <p class="text-2xl font-bold" x-text="`${(1609.34 / (pace * 4) * 3.6).toFixed(2)} km/h`"></p>
+              </div>
+
+              <div
+                class="flex-1 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-500 dark:text-gray-400">与现有纪录差距</p>
+                <p class="text-2xl font-bold" x-text="`${((pace * 4) - 247.64).toFixed(2)} 秒`"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 时间线 -->
+    <section class="bg-gray-100 dark:bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="mb-12 fade-in">
+          <h2 class="text-3xl font-bold mb-6">从班尼斯特到基普耶贡：4分钟一英里时间线</h2>
+
+          <div class="relative">
+            <!-- 时间线轴 -->
+            <div
+              class="absolute left-0 md:left-1/2 ml-5 md:ml-0 w-0.5 h-full bg-primary-500 z-0 transform md:translate-x-px">
+            </div>
+
+            <!-- 时间线项目 -->
+            <div class="space-y-12">
+              <!-- 1954 -->
+              <div
+                class="timeline-item relative flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="flex-1 md:w-5/12 md:text-right mb-4 md:mb-0 md:pr-8">
+                  <h3 class="font-bold text-lg">1954年5月6日</h3>
+                  <p class="text-gray-700 dark:text-gray-300">罗杰·班尼斯特首次突破4分钟一英里障碍，成绩为3:59.4</p>
+                </div>
+                <div
+                  class="z-10 md:absolute md:left-1/2 md:transform md:-translate-x-1/2 rounded-full border-4 border-primary-500 bg-white dark:bg-gray-900 h-10 w-10 flex items-center justify-center text-primary-800 dark:text-primary-300 font-bold">
+                  <iconify-icon icon="tabler:flag"></iconify-icon>
+                </div>
+                <div class="flex-1 md:w-5/12 md:pl-8">
+                  <div class="bg-white dark:bg-gray-700 shadow-md rounded-lg p-4">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">历史性突破</p>
+                    <p class="font-medium">打破了人们认为不可能的心理障碍</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 1999 -->
+              <div
+                class="timeline-item relative flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="flex-1 md:w-5/12 md:text-right mb-4 md:mb-0 md:pr-8">
+                  <div class="bg-white dark:bg-gray-700 shadow-md rounded-lg p-4 md:ml-auto">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">现行男子世界纪录</p>
+                    <p class="font-medium">比4分钟快近17秒</p>
+                  </div>
+                </div>
+                <div
+                  class="z-10 md:absolute md:left-1/2 md:transform md:-translate-x-1/2 rounded-full border-4 border-primary-500 bg-white dark:bg-gray-900 h-10 w-10 flex items-center justify-center text-primary-800 dark:text-primary-300 font-bold">
+                  <iconify-icon icon="tabler:trophy"></iconify-icon>
+                </div>
+                <div class="flex-1 md:w-5/12 md:pl-8">
+                  <h3 class="font-bold text-lg">1999年7月7日</h3>
+                  <p class="text-gray-700 dark:text-gray-300">希查姆·埃尔·格鲁伊创下男子一英里世界纪录3:43.13</p>
+                </div>
+              </div>
+
+              <!-- 2023 -->
+              <div
+                class="timeline-item relative flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="flex-1 md:w-5/12 md:text-right mb-4 md:mb-0 md:pr-8">
+                  <h3 class="font-bold text-lg">2023年7月21日</h3>
+                  <p class="text-gray-700 dark:text-gray-300">费丝·基普耶贡创下女子一英里世界纪录4:07.64</p>
+                </div>
+                <div
+                  class="z-10 md:absolute md:left-1/2 md:transform md:-translate-x-1/2 rounded-full border-4 border-primary-500 bg-white dark:bg-gray-900 h-10 w-10 flex items-center justify-center text-primary-800 dark:text-primary-300 font-bold">
+                  <iconify-icon icon="tabler:award"></iconify-icon>
+                </div>
+                <div class="flex-1 md:w-5/12 md:pl-8">
+                  <div class="bg-white dark:bg-gray-700 shadow-md rounded-lg p-4">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">女子最佳</p>
+                    <p class="font-medium">接近但仍未突破4分钟大关</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2025 -->
+              <div
+                class="timeline-item relative flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="flex-1 md:w-5/12 md:text-right mb-4 md:mb-0 md:pr-8">
+                  <div class="bg-white dark:bg-gray-700 shadow-md rounded-lg p-4 md:ml-auto">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">历史性尝试</p>
+                    <p class="font-medium">由耐克支持的专项挑战</p>
+                  </div>
+                </div>
+                <div
+                  class="z-10 md:absolute md:left-1/2 md:transform md:-translate-x-1/2 rounded-full border-4 border-primary-500 bg-white dark:bg-gray-900 h-10 w-10 flex items-center justify-center text-primary-800 dark:text-primary-300 font-bold">
+                  <iconify-icon icon="tabler:star"></iconify-icon>
+                </div>
+                <div class="flex-1 md:w-5/12 md:pl-8">
+                  <h3 class="font-bold text-lg">2025年6月26日</h3>
+                  <p class="text-gray-700 dark:text-gray-300">费丝·基普耶贡的"Breaking 4"挑战</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 意义与影响 -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="mb-12 fade-in">
+        <h2 class="text-3xl font-bold mb-6">突破极限：Breaking 4 的意义</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+              不论结果如何，费丝·基普耶贡的尝试都将被载入体育史册。突破4分钟一英里对女性跑者具有与1954年班尼斯特对男性同样的象征意义。</p>
+
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+              正如耐克首席执行官埃利奥特·希尔所说："Breaking4是我们将全力以赴实现的宏大梦想——帮助精英和日常运动员相信一切皆有可能。"</p>
+
+            <p class="text-lg text-gray-700 dark:text-gray-300">这一尝试的非官方性质引发了一些争议，但它无疑在挑战人类潜能的边界，并激励下一代女性运动员。</p>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
+            <h3 class="text-xl font-semibold mb-4">预测与讨论</h3>
+
+            <div class="space-y-4">
+              <div class="pb-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-medium">预测成绩分布</span>
+                </div>
+                <div class="h-12">
+                  <canvas id="predictionsChart"></canvas>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="text-lg font-medium mb-3">专家观点</h4>
+                <div class="space-y-3">
+                  <div class="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
+                    <p class="text-gray-800 dark:text-gray-200">"在理想条件下，基普耶贡可能跑出4:02-4:03的成绩，但将个人最佳缩短7秒以上极具挑战性。"</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">— LetsRun.com 评论员</p>
+                  </div>
+
+                  <div class="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
+                    <p class="text-gray-800 dark:text-gray-200">"突破4分钟不仅是速度的问题，更是心理障碍。就像班尼斯特那样，一旦被打破，会有更多女性跟随。"</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">— 国际田联分析师</p>
+                  </div>
+
+                  <div class="bg-gray-50 dark:bg-gray-900 p-3 rounded-lg">
+                    <p class="text-gray-800 dark:text-gray-200">"技术、训练和人类潜能的结合让我们相信，4分钟一英里女子记录将在未来几年被打破，无论是这次还是不久的将来。"
+                    </p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">— 跑者世界杂志</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 民意调查 -->
+        <div
+          class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700"
+          x-data="{
+                    voted: false,
+                    option: null,
+                    results: {
+                        success: 42,
+                        failure: 27,
+                        future: 31
+                    },
+                    get total() {
+                        return this.results.success + this.results.failure + this.results.future;
+                    },
+                    vote(choice) {
+                        this.option = choice;
+                        this.voted = true;
+                        // 这里只是模拟投票，实际应用中需要与后端API交互
+                        this.results[choice]++;
+                    },
+                    percentage(value) {
+                        return ((value / this.total) * 100).toFixed(1) + '%';
+                    }
+                }">
+          <h3 class="text-xl font-semibold mb-4">您的看法？</h3>
+          <p class="text-gray-700 dark:text-gray-300 mb-6">费丝·基普耶贡能否在2025年6月成功突破4分钟一英里？</p>
+
+          <div x-show="!voted" class="space-y-3">
+            <button @click="vote('success')"
+              class="w-full text-left p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <span class="font-medium">是的，她将成功突破4分钟</span>
+            </button>
+            <button @click="vote('failure')"
+              class="w-full text-left p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <span class="font-medium">不，她将接近但无法突破</span>
+            </button>
+            <button @click="vote('future')"
+              class="w-full text-left p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <span class="font-medium">暂时不会，但未来5年内会有女性突破</span>
+            </button>
+          </div>
+
+          <div x-show="voted" class="space-y-4">
+            <p class="font-medium text-center">当前结果</p>
+
+            <div class="space-y-3">
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span>是的，她将成功突破4分钟</span>
+                  <span x-text="percentage(results.success)"></span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div class="bg-green-500 h-2.5 rounded-full transition-all duration-500"
+                    :style="`width: ${percentage(results.success)}`"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span>不，她将接近但无法突破</span>
+                  <span x-text="percentage(results.failure)"></span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div class="bg-red-500 h-2.5 rounded-full transition-all duration-500"
+                    :style="`width: ${percentage(results.failure)}`"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span>暂时不会，但未来5年内会有女性突破</span>
+                  <span x-text="percentage(results.future)"></span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-500"
+                    :style="`width: ${percentage(results.future)}`"></div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-sm text-gray-500 dark:text-gray-400 text-center">共有 <span x-text="total"></span> 人参与投票</p>
+            <button @click="voted = false"
+              class="text-primary-600 dark:text-primary-400 text-sm hover:underline mx-auto block">重新投票</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 订阅区域 -->
+    <section class="bg-primary-700 dark:bg-primary-900 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-2xl font-bold mb-4">获取最新挑战进展</h2>
+          <p class="text-primary-100 mb-8">订阅我们的通讯，接收关于费丝·基普耶贡挑战的最新消息、训练进展和分析</p>
+
+          <form class="sm:flex justify-center mb-2" @submit.prevent="alert('订阅成功！我们会在重要更新时通知您。')">
+            <label for="email-address" class="sr-only">电子邮箱</label>
+            <input id="email-address" name="email" type="email" autocomplete="email" required
+              class="w-full px-5 py-3 placeholder-gray-400 text-gray-900 rounded-l-md border border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:max-w-xs"
+              placeholder="输入您的邮箱">
+            <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+              <button type="submit"
+                class="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-r-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                订阅通讯
+              </button>
+            </div>
+          </form>
+          <p class="text-xs text-primary-200">我们尊重您的隐私，不会发送垃圾邮件</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <p class="text-sm text-gray-600 dark:text-gray-400">&copy; 2025 Million. 保留所有权利。</p>
+        </div>
+
+        <div class="flex space-x-6">
+          <a href="https://github.com/million" target="_blank" rel="noopener noreferrer"
+            class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+            <iconify-icon icon="tabler:brand-github" class="h-6 w-6"></iconify-icon>
+            <span class="sr-only">GitHub</span>
+          </a>
+          <a href="https://twitter.com/million" target="_blank" rel="noopener noreferrer"
+            class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+            <iconify-icon icon="tabler:brand-twitter" class="h-6 w-6"></iconify-icon>
+            <span class="sr-only">Twitter</span>
+          </a>
+          <a href="https://linkedin.com/in/million" target="_blank" rel="noopener noreferrer"
+            class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+            <iconify-icon icon="tabler:brand-linkedin" class="h-6 w-6"></iconify-icon>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 倒计时功能
+    function countdown() {
+      return {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        init() {
+          this.updateCountdown();
+          setInterval(() => {
+            this.updateCountdown();
+          }, 1000);
+        },
+        updateCountdown() {
+          const eventDate = new Date('June 26, 2025 12:00:00 GMT+0200').getTime();
+          const now = new Date().getTime();
+          const distance = eventDate - now;
+
+          this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          // 如果倒计时已结束，显示0
+          if (distance < 0) {
+            this.days = 0;
+            this.hours = 0;
+            this.minutes = 0;
+            this.seconds = 0;
+          }
+        }
+      }
+    }
+
+    // 加载图表
+    window.addEventListener('DOMContentLoaded', (event) => {
+      // 记录对比图表
+      const recordsCtx = document.getElementById('recordsChart').getContext('2d');
+      const recordsChart = new Chart(recordsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['男子世界纪录', '女子世界纪录', '4分钟目标'],
+          datasets: [{
+            label: '一英里成绩（秒）',
+            data: [223.13, 247.64, 240],
+            backgroundColor: [
+              'rgba(14, 165, 233, 0.7)',
+              'rgba(236, 72, 153, 0.7)',
+              'rgba(34, 197, 94, 0.7)'
+            ],
+            borderColor: [
+              'rgba(14, 165, 233, 1)',
+              'rgba(236, 72, 153, 1)',
+              'rgba(34, 197, 94, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: false,
+              min: 220,
+              max: 250,
+              ticks: {
+                callback: function (value) {
+                  const minutes = Math.floor(value / 60);
+                  const seconds = Math.floor(value % 60);
+                  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }
+              }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const minutes = Math.floor(context.raw / 60);
+                  const seconds = Math.floor(context.raw % 60);
+                  const decimal = Math.round((context.raw % 1) * 100);
+                  return `${minutes}:${seconds.toString().padStart(2, '0')}.${decimal.toString().padStart(2, '0')}`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // 预测成绩图表
+      const predictionsCtx = document.getElementById('predictionsChart').getContext('2d');
+      const predictionsChart = new Chart(predictionsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['≥ 4:05', '4:03-4:04', '4:01-4:02', '4:00-4:01', '< 4:00'],
+          datasets: [{
+            label: '专家预测分布',
+            data: [10, 25, 40, 20, 5],
+            backgroundColor: [
+              'rgba(239, 68, 68, 0.7)',
+              'rgba(249, 115, 22, 0.7)',
+              'rgba(234, 179, 8, 0.7)',
+              'rgba(132, 204, 22, 0.7)',
+              'rgba(34, 197, 94, 0.7)'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              display: false,
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              display: true,
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
