@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>谷歌A2A协议详解 - 可视化交互展示</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Highlight.js for code highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32">
+  <style>
+    /* 自定义样式 */
+    body {
+      scroll-behavior: smooth;
+    }
+
+    .card {
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      border-color: #3b82f6;
+    }
+
+    .btn {
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background-color: #2563eb;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 代码块样式 */
+    pre {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin: 0;
+    }
+
+    /* 懒加载图片 */
+    img.lazy {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    img.lazy.loaded {
+      opacity: 1;
+    }
+
+    /* 图片样式更新 */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
+  <!-- 导航栏 -->
+  <nav class="bg-white dark:bg-gray-800 shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <h1 class="text-xl font-bold">谷歌A2A协议</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+            <i class="fas fa-moon"></i>
+          </button>
+          <a href="#overview" class="text-gray-600 dark:text-gray-300 hover:text-blue-600">概览</a>
+          <a href="#diagrams" class="text-gray-600 dark:text-gray-300 hover:text-blue-600">图例</a>
+          <a href="#code" class="text-gray-600 dark:text-gray-300 hover:text-blue-600">代码</a>
+          <a href="#footer" class="text-gray-600 dark:text-gray-300 hover:text-blue-600">关于</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- 简介 -->
+    <section id="overview" class="mb-16 fade-in">
+      <h2 class="text-3xl font-bold mb-6">A2A协议简介</h2>
+      <p class="text-lg mb-4">
+        谷歌的A2A（Agent-to-Agent）协议是2025年推出的开放标准，旨在实现AI智能体间的无缝通信与协作。该协议支持多模态数据处理（文本、音频、视频），基于HTTP、SSE、JSON-RPC等标准，易于集成，已被广泛应用于金融、医疗等领域。
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-semibold mb-2">核心功能</h3>
+          <p>支持任务分解、信息同步和多代理协作，打破系统孤岛。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-semibold mb-2">技术基础</h3>
+          <p>基于HTTP等成熟标准，确保稳定性和可扩展性。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-semibold mb-2">应用场景</h3>
+          <p>覆盖招聘、电商物流、科研协作等复杂任务。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 图例 -->
+    <section id="diagrams" class="mb-16 fade-in">
+      <h2 class="text-3xl font-bold mb-6">关键图例</h2>
+      <p class="text-lg mb-4">以下是A2A协议的核心图例，展示其架构和交互流程。</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <img class="w-full rounded-lg mb-4" src="https://google.github.io/A2A/assets/a2a-main.png"
+            alt="A2A Main Graphic">
+          <h3 class="text-xl font-semibold mb-2">A2A主要图例</h3>
+          <p>详细说明核心组件和交互流程。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <img class="w-full rounded-lg mb-4" src="https://google.github.io/A2A/assets/a2a-mcp-readme.png"
+            alt="A2A MCP Graphic">
+          <h3 class="text-xl font-semibold mb-2">A2A与MCP关系</h3>
+          <p>展示A2A与MCP的互补性。</p>
+        </div>
+      </div>
+      <p class="mt-4">更多图例请访问 <a href="https://google.github.io/A2A/" class="text-blue-600 hover:underline">官方文档</a>。
+      </p>
+    </section>
+
+    <!-- MCP vs A2A 对比部分 -->
+    <section id="protocol-comparison" class="mb-16 fade-in">
+      <h2 class="text-3xl font-bold mb-6">MCP与A2A协议对比</h2>
+      <p class="text-lg mb-4">
+        谷歌的模型上下文协议(MCP)和代理对代理协议(A2A)针对AI生态系统中的不同交互需求，互为补充。理解它们的差异有助于开发者选择适合的协议实现AI系统。
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <!-- MCP卡片 -->
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <div class="flex items-center mb-4">
+            <div class="text-3xl text-blue-600 mr-4"><i class="fas fa-plug"></i></div>
+            <h3 class="text-2xl font-semibold">MCP（模型上下文协议）</h3>
+          </div>
+          <p class="mb-4">用于AI代理与工具、API或外部服务的交互，适合需要直接调用外部资源或处理上下文数据的场景。</p>
+          <h4 class="text-lg font-semibold mb-2">适用场景：</h4>
+          <ul class="list-disc pl-5 mb-4">
+            <li>调用外部API（如天气服务、数据库）</li>
+            <li>工具集成（搜索引擎、文件系统）</li>
+            <li>上下文管理（保存用户对话历史）</li>
+            <li>单一代理执行简单任务</li>
+          </ul>
+          <h4 class="text-lg font-semibold mb-2">特点：</h4>
+          <ul class="list-disc pl-5">
+            <li>侧重于"代理-工具"交互</li>
+            <li>强调数据格式和上下文的标准化</li>
+            <li>简化API调用流程</li>
+          </ul>
+        </div>
+
+        <!-- A2A卡片 -->
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <div class="flex items-center mb-4">
+            <div class="text-3xl text-blue-600 mr-4"><i class="fas fa-network-wired"></i></div>
+            <h3 class="text-2xl font-semibold">A2A（代理对代理协议）</h3>
+          </div>
+          <p class="mb-4">用于多个AI代理之间的通信与协作，适合复杂任务分解、代理间信息共享或协同工作场景。</p>
+          <h4 class="text-lg font-semibold mb-2">适用场景：</h4>
+          <ul class="list-disc pl-5 mb-4">
+            <li>多代理协作（如旅行规划、医疗诊断）</li>
+            <li>任务分解（将复杂任务分配给专门代理）</li>
+            <li>跨平台互操作（不同供应商代理协作）</li>
+            <li>复杂、多步骤任务处理</li>
+          </ul>
+          <h4 class="text-lg font-semibold mb-2">特点：</h4>
+          <ul class="list-disc pl-5">
+            <li>侧重于"代理-代理"交互</li>
+            <li>支持动态任务分配和多模态数据</li>
+            <li>实现代理间标准化通信</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 技术对比表格 -->
+      <div class="overflow-x-auto mb-8">
+        <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
+          <thead class="bg-gray-200 dark:bg-gray-700">
+            <tr>
+              <th class="py-3 px-4 text-left">特性</th>
+              <th class="py-3 px-4 text-left">MCP</th>
+              <th class="py-3 px-4 text-left">A2A</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
+            <tr>
+              <td class="py-3 px-4">交互对象</td>
+              <td class="py-3 px-4">代理与工具/API</td>
+              <td class="py-3 px-4">代理与代理</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4">数据类型</td>
+              <td class="py-3 px-4">上下文、API响应</td>
+              <td class="py-3 px-4">多模态（文本、音频、视频）</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4">复杂性</td>
+              <td class="py-3 px-4">单一任务</td>
+              <td class="py-3 px-4">复杂任务分解</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4">标准</td>
+              <td class="py-3 px-4">HTTP、JSON</td>
+              <td class="py-3 px-4">HTTP、SSE、JSON-RPC</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4">生态支持</td>
+              <td class="py-3 px-4">工具集成</td>
+              <td class="py-3 px-4">跨平台代理协作</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 代码对比示例 -->
+      <h3 class="text-2xl font-bold mb-4">实际案例代码对比</h3>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- MCP代码示例 -->
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h4 class="text-xl font-semibold mb-2">使用MCP调用天气API</h4>
+          <p class="mb-2">简单场景：用户询问"巴黎明天天气如何"</p>
+          <pre><code class="language-python">from mcp import MCPClient
+
+# 创建MCP客户端连接API服务
+client = MCPClient(api_key="YOUR_API_KEY")
+
+# 调用天气API获取数据
+weather = client.call_api(
+    "openweathermap", 
+    {"location": "Paris", "date": "tomorrow"}
+)
+
+# 处理并展示结果
+print(f"巴黎明天天气: {weather['temp']}°C, {weather['condition']}")</code></pre>
+        </div>
+
+        <!-- A2A代码示例 -->
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h4 class="text-xl font-semibold mb-2">使用A2A协调多代理协作</h4>
+          <p class="mb-2">复杂场景：用户要求"计划巴黎5天行程"</p>
+          <pre><code class="language-python">from a2a import A2AClient
+
+# 连接各个专业代理
+weather_client = A2AClient("http://localhost:8001")
+search_client = A2AClient("http://localhost:8002")
+planner_client = A2AClient("http://localhost:8003")
+
+# 协调多代理协作
+async def plan_paris_trip():
+    # 1. 获取巴黎天气预报
+    weather = await weather_client.call_method(
+        "get_forecast", {"location": "Paris", "days": 5}
+    )
+    
+    # 2. 查询巴黎热门景点
+    attractions = await search_client.call_method(
+        "search", {"query": "Paris top attractions"}
+    )
+    
+    # 3. 根据天气和景点生成行程计划
+    plan = await planner_client.call_method(
+        "generate_plan", 
+        {"weather": weather, "attractions": attractions}
+    )
+    
+    return plan</code></pre>
+        </div>
+      </div>
+
+      <!-- 选择指南 -->
+      <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="text-2xl font-bold mb-4">协议选择指南</h3>
+        <p class="mb-4">在实际应用中，MCP和A2A常结合使用，MCP负责工具层交互，A2A负责代理层协作。选择时需根据以下因素判断：</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div class="p-4 border border-gray-300 dark:border-gray-600 rounded-lg">
+            <h4 class="font-semibold mb-2">选择MCP的场景</h4>
+            <p>当任务仅需单一代理调用API或工具完成，无需多代理协作时。</p>
+          </div>
+          <div class="p-4 border border-gray-300 dark:border-gray-600 rounded-lg">
+            <h4 class="font-semibold mb-2">选择A2A的场景</h4>
+            <p>当任务复杂，需要多个专业化代理协同工作，或跨平台代理交互时。</p>
+          </div>
+          <div class="p-4 border border-gray-300 dark:border-gray-600 rounded-lg">
+            <h4 class="font-semibold mb-2">同时使用两者的场景</h4>
+            <p>在构建完整生态系统时，A2A处理代理间协作，而各代理内部使用MCP调用工具和API。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 代码片段 -->
+    <section id="code" class="mb-16 fade-in">
+      <h2 class="text-3xl font-bold mb-6">代码示例</h2>
+      <p class="text-lg mb-4">以下是使用A2A协议实现的天气代理示例，展示多代理协作能力。</p>
+      <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="text-xl font-semibold mb-2">天气代理（WeatherAgent.py）</h3>
+        <pre><code class="language-python">from a2a import A2AServer, AgentCard
+import requests
+
+class WeatherAgent:
+    def get_weather(self, location):
+        api_key = "YOUR_OPENWEATHERMAP_API_KEY"
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}"
+        response = requests.get(url)
+        data = response.json()
+        if data.get("cod") == 200:
+            return f"{location}: {data['main']['temp']}°C, {data['weather'][0]['description']}"
+        else:
+            return "Weather data not found."
+
+if __name__ == "__main__":
+    agent_card = AgentCard(
+        name="WeatherAgent",
+        description="Provides weather information for a given location.",
+        skills=["get_weather(location)"]
+    )
+    server = A2AServer(agent_card, WeatherAgent())
+    server.run(port=8001)
+</code></pre>
+        <p class="mt-4">完整代码请访问 <a href="https://github.com/themanojdesai/python-a2a"
+            class="text-blue-600 hover:underline">GitHub仓库</a>。</p>
+      </div>
+
+      <!-- 更多代码示例 -->
+      <div class="mt-10">
+        <h3 class="text-2xl font-bold mb-4">更多代码实例</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- 代理通信示例 -->
+          <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h4 class="text-xl font-semibold mb-2">代理间通信示例</h4>
+            <pre><code class="language-python">from a2a import A2AClient
+
+async def query_weather_agent():
+    # 连接到天气代理
+    client = A2AClient("http://localhost:8001")
+    
+    # 查询北京的天气
+    result = await client.call_method(
+        "get_weather", 
+        {"location": "Beijing"}
+    )
+    
+    # 处理并显示结果
+    print(f"天气查询结果: {result}")
+    
+    # 关闭连接
+    await client.close()</code></pre>
+          </div>
+
+          <!-- 代理注册示例 -->
+          <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h4 class="text-xl font-semibold mb-2">代理注册示例</h4>
+            <pre><code class="language-python">from a2a import AgentRegistry, AgentCard
+
+# 创建代理描述卡
+travel_agent_card = AgentCard(
+    name="TravelAgent",
+    description="Plans travel itineraries and books flights/hotels",
+    version="1.0.0",
+    skills=[
+        "plan_itinerary(start_date, end_date, preferences)",
+        "find_flights(origin, destination, date)",
+        "book_hotel(location, check_in, check_out, guests)"
+    ],
+    contact_info={
+        "author": "Million",
+        "email": "contact@example.com"
+    }
+)
+
+# 注册代理到中央目录
+registry = AgentRegistry("https://registry.a2a-protocol.org")
+registry.register(travel_agent_card, "https://my-travel-agent.example.com")</code></pre>
+          </div>
+        </div>
+
+        <!-- 更复杂的示例 -->
+        <div class="mt-6">
+          <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h4 class="text-xl font-semibold mb-2">多代理协作实例</h4>
+            <pre><code class="language-python">from a2a import A2AServer, AgentCollaboration, AgentCard
+import asyncio
+
+class TripPlannerAgent:
+    def __init__(self):
+        # 连接到其他必要的代理
+        self.weather_client = A2AClient("http://localhost:8001")
+        self.flight_client = A2AClient("http://localhost:8002")
+        self.hotel_client = A2AClient("http://localhost:8003")
+        
+    async def plan_trip(self, location, dates):
+        """规划一次完整的旅行，协调多个代理共同工作"""
+        # 1. 检查目的地天气
+        weather = await self.weather_client.call_method(
+            "get_forecast", {"location": location, "dates": dates}
+        )
+        
+        # 2. 根据天气情况查找航班
+        if weather.get("is_suitable", False):
+            flights = await self.flight_client.call_method(
+                "find_flights", {"destination": location, "dates": dates}
+            )
+            
+            # 3. 查找酒店
+            hotels = await self.hotel_client.call_method(
+                "find_hotels", {"location": location, "dates": dates}
+            )
+            
+            # 4. 整合结果
+            return {
+                "weather": weather,
+                "flights": flights,
+                "hotels": hotels,
+                "recommendation": self._generate_recommendation(weather, flights, hotels)
+            }
+        else:
+            return {
+                "error": "不建议在所选日期前往该目的地，天气条件不佳",
+                "weather": weather
+            }
+            
+    def _generate_recommendation(self, weather, flights, hotels):
+        # 根据获取的数据生成个性化推荐
+        # 实际实现会更复杂
+        return "根据天气和可用选项的分析，推荐XYZ航班和ABC酒店"
+
+# 启动服务器
+if __name__ == "__main__":
+    agent_card = AgentCard(
+        name="TripPlanner",
+        description="Coordinates travel planning across multiple specialized agents",
+        skills=["plan_trip(location, dates)"]
+    )
+    server = A2AServer(agent_card, TripPlannerAgent())
+    server.run(port=8004)</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A2A协议交互演示 -->
+    <section id="interactive-demo" class="mb-16 fade-in">
+      <h2 class="text-3xl font-bold mb-6">A2A协议交互演示</h2>
+      <p class="text-lg mb-4">通过此交互演示，直观了解A2A协议如何实现多代理协作。</p>
+
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+          <!-- 代理1：旅行规划 -->
+          <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-semibold">旅行规划代理</h3>
+              <span
+                class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full"
+                id="agent1-status">在线</span>
+            </div>
+            <div class="h-40 bg-gray-100 dark:bg-gray-700 rounded p-3 overflow-auto mb-3 text-sm" id="agent1-console">
+              <!-- 内容将通过JS动态添加 -->
+              准备接收任务...
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">负责整体行程规划</div>
+          </div>
+
+          <!-- 代理2：天气信息 -->
+          <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-semibold">天气信息代理</h3>
+              <span
+                class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full"
+                id="agent2-status">在线</span>
+            </div>
+            <div class="h-40 bg-gray-100 dark:bg-gray-700 rounded p-3 overflow-auto mb-3 text-sm" id="agent2-console">
+              <!-- 内容将通过JS动态添加 -->
+              准备接收天气查询...
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">提供目的地天气预报</div>
+          </div>
+
+          <!-- 代理3：酒店预订 -->
+          <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-semibold">酒店预订代理</h3>
+              <span
+                class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full"
+                id="agent3-status">在线</span>
+            </div>
+            <div class="h-40 bg-gray-100 dark:bg-gray-700 rounded p-3 overflow-auto mb-3 text-sm" id="agent3-console">
+              <!-- 内容将通过JS动态添加 -->
+              准备接收酒店查询...
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">负责酒店搜索与推荐</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="font-semibold mb-2">模拟任务请求</h4>
+          <div class="flex items-center gap-2">
+            <select id="demo-destination" class="p-2 border border-gray-300 dark:border-gray-600 rounded">
+              <option value="Paris">巴黎</option>
+              <option value="Tokyo">东京</option>
+              <option value="New York">纽约</option>
+            </select>
+            <input type="date" id="demo-date" class="p-2 border border-gray-300 dark:border-gray-600 rounded"
+              value="2025-06-01">
+            <button id="start-demo" class="btn bg-blue-500 text-white px-4 py-2 rounded">启动演示</button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-2">执行结果</h4>
+          <div class="bg-gray-100 dark:bg-gray-700 rounded p-4 mb-3" id="demo-result">
+            请启动演示查看结果...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 实际应用案例 -->
+    <section id="use-cases" class="mb-16 fade-in">
+      <h2 class="text-3xl font-bold mb-6">A2A协议应用场景</h2>
+      <p class="text-lg mb-4">A2A协议正在多个行业得到应用，以下是几个具有代表性的案例：</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-hospital"></i></div>
+          <h3 class="text-xl font-semibold mb-2">医疗协作</h3>
+          <p>多个医疗AI代理协同工作，一个分析医学图像，一个处理病历数据，第三个整合诊断建议，为医生提供全面信息。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-robot"></i></div>
+          <h3 class="text-xl font-semibold mb-2">智能制造</h3>
+          <p>工厂中的AI代理监控设备状态、预测维护需求并协调生产调度，实现全自动化生产流程。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <div class="text-4xl text-blue-600 mb-4"><i class="fas fa-search"></i></div>
+          <h3 class="text-xl font-semibold mb-2">增强搜索</h3>
+          <p>搜索引擎与专业领域AI代理协作，为复杂查询提供精确答案，而非仅返回相关网页列表。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer id="footer" class="bg-white dark:bg-gray-800 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">关于作者</h3>
+          <p>作者：Million</p>
+          <p>专注于AI技术与开源项目的分享。</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">社交媒体</h3>
+          <div class="flex space-x-4">
+            <a href="https://github.com" class="text-gray-600 dark:text-gray-300 hover:text-blue-600"><i
+                class="fab fa-github"></i></a>
+            <a href="https://x.com" class="text-gray-600 dark:text-gray-300 hover:text-blue-600"><i
+                class="fab fa-twitter"></i></a>
+            <a href="https://linkedin.com" class="text-gray-600 dark:text-gray-300 hover:text-blue-600"><i
+                class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">版权信息</h3>
+          <p>&copy; 2025 Million. 保留所有权利。</p>
+        </div>
+      </div>
+      <div class="mt-8 text-center">
+        <p class="text-sm text-gray-500 dark:text-gray-400">参考文献：<br>
+          <a href="https://google.github.io/A2A/" class="text-blue-600 hover:underline">谷歌A2A官方文档</a> |
+          <a href="https://github.com/themanojdesai/python-a2a" class="text-blue-600 hover:underline">Python A2A示例</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 深色/浅色模式切换
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    // 检查系统主题
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      html.classList.add('dark');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      themeToggle.innerHTML = html.classList.contains('dark')
+        ? '<i class="fas fa-sun"></i>'
+        : '<i class="fas fa-moon"></i>';
+    });
+
+    // 懒加载图片
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('img.lazy');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.add('loaded');
+            observer.unobserve(img);
+          }
+        });
+      });
+      images.forEach(img => observer.observe(img));
+    });
+
+    // 淡入动画
+    const fadeIns = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeIns.forEach(el => observer.observe(el));
+
+    // 初始化代码高亮
+    document.addEventListener('DOMContentLoaded', () => {
+      hljs.highlightAll();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>协和“4+4”模式争议专题</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* 自定义样式 */
+    body {
+      @apply font-sans antialiased;
+    }
+
+    /* 深色模式 */
+    @media (prefers-color-scheme: dark) {
+      body {
+        @apply bg-gray-900 text-gray-100;
+      }
+    }
+
+    /* 浅色模式 */
+    @media (prefers-color-scheme: light) {
+      body {
+        @apply bg-gray-50 text-gray-900;
+      }
+    }
+
+    /* 平滑滚动 */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* 卡片悬停效果 */
+    .card {
+      @apply transition-all duration-300 ease-in-out;
+    }
+
+    .card:hover {
+      @apply shadow-lg transform scale-105 border border-gray-300 dark:border-gray-600;
+    }
+
+    /* 按钮悬停效果 */
+    .btn {
+      @apply transition-all duration-200 ease-in-out;
+    }
+
+    .btn:hover {
+      @apply transform scale-110 bg-opacity-80;
+    }
+
+    /* 淡入动画 */
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+  <!-- 导航栏 -->
+  <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold">协和“4+4”模式争议</h1>
+      <div class="flex items-center space-x-4">
+        <button id="theme-toggle" class="btn p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+          <i class="fas fa-sun dark:hidden"></i>
+          <i class="fas fa-moon hidden dark:block"></i>
+        </button>
+        <a href="#timeline" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">时间轴</a>
+        <a href="#analysis" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">分析</a>
+        <a href="#footer" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 头部 -->
+  <header class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-16 text-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 fade-in">协和“4+4”：医学教育改革的争议风暴</h1>
+      <p class="text-lg md:text-xl mb-6 fade-in">从创新尝试到舆论漩涡，探索“4+4”模式的背景与挑战</p>
+      <a href="#overview"
+        class="btn inline-block bg-white text-blue-600 font-semibold py-2 px-6 rounded-full fade-in">了解详情</a>
+    </div>
+  </header>
+
+  <!-- 主要内容 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- 模式概述 -->
+    <section id="overview" class="mb-16">
+      <h2 class="text-3xl font-semibold mb-6 fade-in">什么是协和“4+4”模式？</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-xl font-semibold mb-4"><i class="fas fa-graduation-cap mr-2"></i>培养路径</h3>
+          <p>4年非医学本科（如经济学、园艺）+ 4年医学博士课程（含规培），培养临床医学博士（MD）。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-xl font-semibold mb-4"><i class="fas fa-bullseye mr-2"></i>目标愿景</h3>
+          <p>由王辰院士推动，旨在吸纳多学科背景人才，效仿美国模式，培养复合型医学精英。</p>
+        </div>
+      </div>
+      <div class="mt-8 text-center">
+        <img
+          src="https://images.unsplash.com/photo-1576091160550-2173fdabe37f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+          alt="医学教育" class="rounded-lg shadow-md mx-auto lazy-load" loading="lazy">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">图片来源：Unsplash</p>
+      </div>
+    </section>
+
+    <!-- 事件时间轴 -->
+    <section id="timeline" class="mb-16">
+      <h2 class="text-3xl font-semibold mb-6 fade-in">事件时间轴</h2>
+      <div class="space-y-8">
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-lg font-semibold"><i class="fas fa-calendar-alt mr-2"></i>2016年</h3>
+          <p>协和医学院启动“4+4”模式试点，招收首批学生。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-lg font-semibold"><i class="fas fa-calendar-alt mr-2"></i>2023年</h3>
+          <p>首届17名“4+4”学生毕业，取得临床医学博士学位。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-lg font-semibold"><i class="fas fa-calendar-alt mr-2"></i>2025年4月28日</h3>
+          <p>肖飞事件爆发，协和“4+4”模式因董袭莹背景引发争议。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-lg font-semibold"><i class="fas fa-calendar-alt mr-2"></i>2025年4月29日</h3>
+          <p>“4+4”模式登上微博热搜，公众呼吁调查招生与培养透明度。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 争议分析 -->
+    <section id="analysis" class="mb-16">
+      <h2 class="text-3xl font-semibold mb-6 fade-in">争议焦点与社会反响</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-lg font-semibold mb-4"><i class="fas fa-balance-scale mr-2"></i>教育公平</h3>
+          <p>网友质疑“4+4”模式是否为“速成”医生提供捷径，可能损害中下层学生机会。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-lg font-semibold mb-4"><i class="fas fa-stethoscope mr-2"></i>培养质量</h3>
+          <p>非医学背景学生4年能否达到合格医生水平？杜斌教授曾质疑模式成效。</p>
+        </div>
+        <div class="card bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md fade-in">
+          <h3 class="text-lg font-semibold mb-4"><i class="fas fa-shield-alt mr-2"></i>公信力危机</h3>
+          <p>事件暴露招生透明度和医院管理问题，协和公信力面临挑战。</p>
+        </div>
+      </div>
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold mb-4 fade-in">舆论声音</h3>
+        <blockquote class="border-l-4 border-blue-500 pl-4 italic text-gray-600 dark:text-gray-300 fade-in">
+          “问题不在‘4+4’模式本身，而在于招生和监管的透明度。”<br>
+          —— X平台网友评论
+        </blockquote>
+        <p class="mt-4 fade-in">媒体呼吁协和公开招生标准与培养数据，重建公众信任。</p>
+      </div>
+    </section>
+
+    <!-- 未来展望 -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-semibold mb-6 fade-in">未来展望</h2>
+      <p class="mb-4 fade-in">“4+4”模式作为医学教育改革尝试，需平衡创新与公平。建议：</p>
+      <ul class="list-disc pl-6 space-y-2 fade-in">
+        <li>公开招生标准与培养流程，提升透明度。</li>
+        <li>加强监管，确保毕业生专业能力达标。</li>
+        <li>借鉴国际经验，优化跨学科医学教育模式。</li>
+      </ul>
+      <div class="mt-8 text-center">
+        <img src="https://www.pumch.cn/Uploads/Picture/2017/11/15/s5a0bf06119eaa.jpg" alt="医学未来"
+          class="rounded-lg shadow-md mx-auto lazy-load" loading="lazy">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">图片来源：Unsplash</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer id="footer" class="bg-gray-100 dark:bg-gray-800 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h3 class="text-xl font-semibold mb-4">关于作者</h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">作者：Million</p>
+      <div class="flex justify-center space-x-4 mb-4">
+        <a href="https://github.com" class="text-gray-600 dark:text-gray-300 hover:text-blue-500"><i
+            class="fab fa-github fa-2x"></i></a>
+        <a href="https://twitter.com" class="text-gray-600 dark:text-gray-300 hover:text-blue-500"><i
+            class="fab fa-twitter fa-2x"></i></a>
+        <a href="https://linkedin.com" class="text-gray-600 dark:text-gray-300 hover:text-blue-500"><i
+            class="fab fa-linkedin fa-2x"></i></a>
+      </div>
+      <p class="text-gray-500 dark:text-gray-400 text-sm">&copy; 2025 Million. 保留所有权利。</p>
+      <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">参考资料：<a href="https://example.com"
+          class="underline">新闻报道</a> | <a href="https://example.com" class="underline">X平台讨论</a></p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 主题切换
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // 初始化主题
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.body.classList.add('dark');
+    }
+
+    // 懒加载图片
+    document.addEventListener('DOMContentLoaded', () => {
+      const lazyImages = document.querySelectorAll('img.lazy-load');
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src || img.src;
+            img.classList.remove('lazy-load');
+            observer.unobserve(img);
+          }
+        });
+      });
+      lazyImages.forEach(img => observer.observe(img));
+    });
+
+    // 淡入动画触发
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => fadeObserver.observe(el));
+  </script>
+</body>
+
+</html>
